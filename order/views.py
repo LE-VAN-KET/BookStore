@@ -7,9 +7,6 @@ from cart.cart import Cart
 from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from .pdfcreator import renderPdf
-import logging
-
-logger = logging.getLogger(__name__)
 
 def order_create(request):
 	cart = Cart(request)
@@ -22,7 +19,6 @@ def order_create(request):
 				order.customer = User.objects.get(id=request.user.id)
 				order.payable = cart.get_total_price()
 				order.totalbook = len(cart) # len(cart.cart) // number of individual book
-    			logger.info(order.customer)
 				order.save()
 
 				for item in cart:
